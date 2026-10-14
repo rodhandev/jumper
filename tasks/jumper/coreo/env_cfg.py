@@ -8,10 +8,10 @@ the rule is applied to this clip's measurements and the result is quoted -- read
 ## This clip, measured
 
 `saludo.npz` at the 50 Hz control rate (10.1 s, the final hold included):
-per-joint position std 0.223 rad at the median and 0.701 at the most active, RMS
-amplitude 0.276 rad; joint velocity RMS 0.601 rad/s, per-joint std 0.386 at the
+per-joint position std 0.233 rad at the median and 0.701 at the most active, RMS
+amplitude 0.278 rad; joint velocity RMS 0.611 rad/s, per-joint std 0.429 at the
 median and 1.709 at the most active, peaking at 4.35 rad/s; the base between 79 and
-115 mm; tilt at most 16.2 degrees.
+115 mm; tilt at most 8.3 degrees.
 
 Measured on 2026-10-14 by a one-off probe over the `.npz` (numpy std / RMS of the
 joint channels and of their finite differences), outside the repository.
@@ -67,10 +67,10 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         # unchanged (5.0) plus the two joint-space terms below (1.5).
         #
         # Joint position: jumper.dance's rule is a std at 0.44 of the clip's RMS
-        # amplitude. Here: 0.44 x 0.276 -> 0.12.
+        # amplitude. Here: 0.44 x 0.278 -> 0.12.
         joint_pos_std=0.12,
         joint_pos_weight=1.0,
-        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.601 -> 0.4.
+        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.611 -> 0.4.
         # Half the position weight, so when they disagree the pose wins.
         joint_vel_std=0.4,
         joint_vel_weight=0.5,
@@ -93,7 +93,7 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         # Root height: this clip moves the body through 79-115 mm, a 36 mm band, so
         # 40 mm exceeds all of it -- jumper.dance's rule, and its number.
         anchor_height_error=0.04,
-        # 1 - cos(tilt) = 0.3 is 45.6 degrees, "has fallen over"; the clip leans 16.2.
+        # 1 - cos(tilt) = 0.3 is 45.6 degrees, "has fallen over"; the clip leans 8.3.
         anchor_tilt_error=0.3,
         # A support foot 50 mm out vertically is half the standing height.
         support_foot_error=0.05,

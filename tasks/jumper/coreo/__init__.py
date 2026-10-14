@@ -9,8 +9,11 @@ the numbers.
 `media/<name>.npz`, written by the external `coreo` tool (Zymbiotek's Jumper
 workspace, `coreo/`) from a timed behaviour script (a *guion*): named postures per
 limb group on a beat grid, interpolated at minimum jerk, the right claw mirrored
-from the left as an offset from `HOME`, joint ranges and speed checked, and the base
-pose solved by `tools/import_wbc_gestures.py`'s resting-floor solver. Every posture
+from the left as an offset from `HOME`, joint ranges and speed checked, the body
+shifted over the four legs by IK wherever a claw is up (at HOME the centre of mass
+is 17 mm ahead of the middle feet, so a raised pair of claws otherwise tips the
+robot onto its face), and the base pose solved by `tools/import_wbc_gestures.py`'s
+resting-floor solver. Every posture
 in its library is a frame of one of the committed gesture clips.
 
 The clip committed now is `saludo` (10.1 s at 100 bpm): the robot leans back and
