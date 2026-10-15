@@ -1,4 +1,4 @@
-"""Environment config for jumper.coreo_romantico: `media/romantico.npz`, by coreo bailar.
+"""Environment config for jumper.coreo_romantico: `media/romantico.npz`, by coreo.
 
 The environment is `tasks/jumper/common/dance/env.py`; this file holds every
 number. Where a number follows a rule `jumper.dance` wrote down for its own clip,
@@ -7,10 +7,10 @@ the rule is applied to this clip's measurements and the result is quoted -- read
 
 ## This clip, measured
 
-At the 50 Hz control rate (35.1 s, the final hold included): per-joint position std
-0.105 rad at the median and 0.678 at the most active, RMS amplitude 0.211 rad;
-joint velocity RMS 0.389 rad/s, per-joint std 0.200 at the median and 1.269 at the
-most active, peaking at 4.46 rad/s; the base between 106 and 115 mm; tilt at most
+At the 50 Hz control rate (28.6 s, the final hold included): per-joint position std
+0.140 rad at the median and 0.812 at the most active, RMS amplitude 0.286 rad;
+joint velocity RMS 0.492 rad/s, per-joint std 0.243 at the median and 1.447 at the
+most active, peaking at 6.82 rad/s; the base between 103 and 117 mm; tilt at most
 8.0 degrees.
 
 Measured on 2026-10-15 by a one-off probe over the `.npz` (numpy std / RMS of the
@@ -30,7 +30,7 @@ from ..common.dance.env import dance_env_cfg
 #: This task's material, written by coreo's `puente/construir.py`.
 MEDIA = Path(__file__).resolve().parent / "media"
 
-#: Episode length, seconds. The clip is 35.1 s, so an episode is a window into it
+#: Episode length, seconds. The clip is 28.6 s, so an episode is a window into it
 #: and the adaptive sampler chooses where it starts. 10 s, as jumper.dance.
 EPISODE_S = 10.0
 
@@ -63,19 +63,19 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         # unchanged (5.0) plus the two joint-space terms below (1.5).
         #
         # Joint position: jumper.dance's rule is a std at 0.44 of the clip's RMS
-        # amplitude. Here: 0.44 x 0.211 -> 0.09.
-        joint_pos_std=0.09,
+        # amplitude. Here: 0.44 x 0.286 -> 0.13.
+        joint_pos_std=0.13,
         joint_pos_weight=1.0,
-        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.389 -> 0.26.
+        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.492 -> 0.33.
         # Half the position weight, so when they disagree the pose wins.
-        joint_vel_std=0.26,
+        joint_vel_std=0.33,
         joint_vel_weight=0.5,
         # Smoothness: calibrated at this action scale (0.25) -- properties of the
         # robot and the action space, not of the clip.
         action_rate_weight=-0.1,
         action_acc_weight=-0.05,
-        # Power: 22 joints at ~0.25 N*m and this clip's ~0.4 rad/s is ~2.1 W, so
-        # -0.02 is about -0.04 a step, 0.7% of the budget -- jumper.dance's weight.
+        # Power: 22 joints at ~0.25 N*m and this clip's ~0.5 rad/s is ~2.7 W, so
+        # -0.02 is about -0.05 a step, 0.8% of the budget -- jumper.dance's weight.
         power_weight=-0.02,
         # Torque above the continuous rating: anchored to the servo, not the clip.
         torque_headroom_weight=-2.0,
@@ -86,7 +86,7 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         self_collision_weight=-1.0,
         self_collision_force=1.0,
         # ── Terminations ──────────────────────────────────────────────────
-        # Root height: this clip moves the body through 106-115 mm, a 9 mm band, so
+        # Root height: this clip moves the body through 103-117 mm, a 14 mm band, so
         # 40 mm exceeds all of it -- jumper.dance's rule, and its number.
         anchor_height_error=0.04,
         # 1 - cos(tilt) = 0.3 is 45.6 degrees, "has fallen over"; the clip leans 8.0.
