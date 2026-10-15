@@ -55,6 +55,7 @@ tasks/jumper/dance/media/*
 tasks/jumper/dance_*/media/.cache/
 tasks/jumper/gesture_*/media/.cache/
 tasks/jumper/coreo/media/.cache/
+tasks/jumper/coreo_romantico/media/.cache/
 
 # The log MuJoCo leaves in the working directory at runtime
 MUJOCO_LOG.TXT
