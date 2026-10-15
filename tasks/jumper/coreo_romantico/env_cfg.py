@@ -8,8 +8,8 @@ the rule is applied to this clip's measurements and the result is quoted -- read
 ## This clip, measured
 
 At the 50 Hz control rate (28.6 s, the final hold included): per-joint position std
-0.140 rad at the median and 0.812 at the most active, RMS amplitude 0.286 rad;
-joint velocity RMS 0.492 rad/s, per-joint std 0.243 at the median and 1.447 at the
+0.143 rad at the median and 0.826 at the most active, RMS amplitude 0.293 rad;
+joint velocity RMS 0.549 rad/s, per-joint std 0.301 at the median and 1.505 at the
 most active, peaking at 6.82 rad/s; the base between 103 and 117 mm; tilt at most
 8.0 degrees.
 
@@ -63,12 +63,12 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         # unchanged (5.0) plus the two joint-space terms below (1.5).
         #
         # Joint position: jumper.dance's rule is a std at 0.44 of the clip's RMS
-        # amplitude. Here: 0.44 x 0.286 -> 0.13.
+        # amplitude. Here: 0.44 x 0.293 -> 0.13.
         joint_pos_std=0.13,
         joint_pos_weight=1.0,
-        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.492 -> 0.33.
+        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.549 -> 0.37.
         # Half the position weight, so when they disagree the pose wins.
-        joint_vel_std=0.33,
+        joint_vel_std=0.37,
         joint_vel_weight=0.5,
         # Smoothness: calibrated at this action scale (0.25) -- properties of the
         # robot and the action space, not of the clip.

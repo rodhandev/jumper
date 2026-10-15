@@ -9,8 +9,8 @@ the numbers.
 `media/romantico.npz` (28.6 s), written by the external `coreo` tool
 (rodhandev/jumper-coreo) from `guiones/video-v2-romantico.guion`, on the beats of an
 original 92 bpm track (generated with ACE-Step, so its rights are ours): a wave, a
-head-scratch while it "thinks", the claws playing a violin, kisses, a sway and a
-bow, steps from coreo's library. coreo detoured the claws where they would cross,
+head-scratch while it "thinks", the claws playing a violin, air kisses (closed
+claws by the face that open as they move away), a sway and a bow, steps from coreo's library. coreo detoured the claws where they would cross,
 balanced the body over the four legs wherever a claw is up, checked joint speed,
 self-collision and tilt, and solved the base pose with
 `tools/import_wbc_gestures.py`'s resting-floor solver.
