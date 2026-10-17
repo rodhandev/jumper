@@ -63,6 +63,8 @@ from .jumper import flat  # noqa: F401,E402
 from .jumper import coreo  # noqa: F401,E402
 from .jumper import coreo_romantico  # noqa: F401,E402
 from .jumper import coreo_dj  # noqa: F401,E402
+from .jumper import coreo_duo  # noqa: F401,E402
+from .jumper import coreo_batalla  # noqa: F401,E402
 from .jumper import gesture_bow  # noqa: F401,E402
 from .jumper import gesture_hello  # noqa: F401,E402
 from .jumper import gesture_paw  # noqa: F401,E402
