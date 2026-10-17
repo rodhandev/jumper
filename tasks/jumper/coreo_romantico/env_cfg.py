@@ -8,15 +8,19 @@ the rule is applied to this clip's measurements and the result is quoted -- read
 ## This clip, measured
 
 At the 50 Hz control rate (28.6 s, the final hold included): per-joint position std
-0.143 rad at the median and 0.826 at the most active, RMS amplitude 0.293 rad;
-joint velocity RMS 0.549 rad/s, per-joint std 0.301 at the median and 1.505 at the
-most active, peaking at 6.82 rad/s; the base between 103 and 117 mm; tilt at most
+0.149 rad at the median and 0.891 at the most active, RMS amplitude 0.378 rad;
+joint velocity RMS 0.763 rad/s, per-joint std 0.301 at the median and 2.071 at the
+most active, peaking at 9.85 rad/s; the base between 104 and 117 mm; tilt at most
 8.0 degrees.
 
-Measured on 2026-10-15 by a one-off probe over the `.npz` (numpy std / RMS of the
-joint channels and of their finite differences), outside the repository.
+Measured on 2026-10-17 by a one-off probe over the `.npz` (numpy std / RMS of the
+joint channels and of their finite differences), outside the repository. The clip
+changed that day: the violin is played the other way round (the robot's left claw low
+and out, the right one bowing across it), which moves the arms more.
 
-**The reward weights are starting points**: no policy has been trained on this clip yet.
+**The reward weights are starting points.** The earlier clip (the violin held high)
+trained to a mean reward of ~63 in 10 000 iterations (2026-10-15); this one has not
+been trained yet.
 """
 
 from __future__ import annotations
@@ -63,19 +67,19 @@ def env_cfg(asset: Path | None = None, play: bool = False) -> ManagerBasedRlEnvC
         # unchanged (5.0) plus the two joint-space terms below (1.5).
         #
         # Joint position: jumper.dance's rule is a std at 0.44 of the clip's RMS
-        # amplitude. Here: 0.44 x 0.293 -> 0.13.
-        joint_pos_std=0.13,
+        # amplitude. Here: 0.44 x 0.378 -> 0.17.
+        joint_pos_std=0.17,
         joint_pos_weight=1.0,
-        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.549 -> 0.37.
+        # Joint velocity: two thirds of the clip's velocity RMS. Here: 0.763 -> 0.51.
         # Half the position weight, so when they disagree the pose wins.
-        joint_vel_std=0.37,
+        joint_vel_std=0.51,
         joint_vel_weight=0.5,
         # Smoothness: calibrated at this action scale (0.25) -- properties of the
         # robot and the action space, not of the clip.
         action_rate_weight=-0.1,
         action_acc_weight=-0.05,
-        # Power: 22 joints at ~0.25 N*m and this clip's ~0.5 rad/s is ~2.7 W, so
-        # -0.02 is about -0.05 a step, 0.8% of the budget -- jumper.dance's weight.
+        # Power: 22 joints at ~0.25 N*m and this clip's ~0.76 rad/s is ~4.2 W, so
+        # -0.02 is about -0.08 a step, 1.3% of the budget -- jumper.dance's weight.
         power_weight=-0.02,
         # Torque above the continuous rating: anchored to the servo, not the clip.
         torque_headroom_weight=-2.0,
